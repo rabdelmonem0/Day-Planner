@@ -6,7 +6,7 @@ function showTime() {
     $('#currentDay').text(date)
 }
 
-var times = [9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+var times = [9,10,11,12,13,14,15,16,17,18,19,20,21]
 function showDay() {
     for (var i=0; i<times.length; i++) {
         createRow(times[i]);
@@ -49,12 +49,10 @@ function createRow(time) {
 
 function renderRows() {
 
-    var displayPast = $("<div class='past'>");
-    var displayPresent = $("<div class='present'>");
-    var displayFuture = $("<div class='future'>");
+    var displayColors = [$("<div class='past'>"),$("<div class='present'>"),$("<div class='future'>")];
     var colLarge = $("<div class='col-md-8'>");
 
-    colLarge.append(displayPast, displayPresent, displayFuture);
+    colLarge.append(displayColors);
 
     $(".container").append(colLarge);
 
@@ -69,15 +67,17 @@ function renderRows() {
     var past = document.querySelector(".past").value;
     var present = document.querySelector(".present").value;
     var future = document.querySelector(".future").value;
-    var hour = document.querySelector(".hour").value;
+}
 
+function displayColors() {
+    var hour = document.querySelector(".hour").value;
     if (hour > past) {
-    displayPast();
-    } else if (hour == present) {
-    displayPresent();
-    } else if (hour < future) {
-    displayFuture();
-};
+        displayColors();
+        } else if (hour == present) {
+        displayColors();
+        } else if (hour < future) {
+        displayColors();
+    };
 }
 
     // if (!savedTasks) do one thing, otherwise, loop over and render them
@@ -89,4 +89,5 @@ function renderRows() {
 setInterval(showTime, 1000)
 showDay();
 renderRows();
+displayColors();
 });
