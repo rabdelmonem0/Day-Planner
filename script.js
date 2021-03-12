@@ -6,7 +6,7 @@ function showTime() {
     $('#currentDay').text(date)
 }
 
-var times = [9,10,11,12,13,14,15,16,17,18,19,20,21]
+var times = [9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
 function showDay() {
     for (var i=0; i<times.length; i++) {
         createRow(times[i]);
@@ -18,9 +18,9 @@ function createRow(time) {
     console.log(time);
     var row = $("<div class='row'>")
     var colTime = $("<div class='col-md-2'>");
-    var collarge = $("<div class='col-md-8'>");
+    var colLarge = $("<div class='col-md-8'>");
     var colSave = $("<div class='col-md-2'>");
-    var showHour = $("<div class='hour'>")
+    var showHour = $("<div class='hour'>");
     var textInput = $("<textarea class='form-control' rows='3' data-time=" + time + ">");
     var saveButton = $("<button class='saveBtn' data-time=" + time + ">");
 
@@ -32,9 +32,9 @@ function createRow(time) {
     }
 
     colSave.append(saveButton);
-    collarge.append(textInput);
+    colLarge.append(textInput);
     colTime.append(showHour);
-    row.append(colTime, collarge, colSave);
+    row.append(colTime, colLarge, colSave);
 
     $(".container").append(row);
 
@@ -46,11 +46,22 @@ function createRow(time) {
     // set color classes -- if (curentHour > timeBlockHour) timeBlock.addClass("future")
 // variable for saved tasks from local storage (get task)
 // renders what's in local storage
-var past = localStorage.getItem("past");
-var present = localStorage.getItem("present");
-var future = localStorage.getItem("future");
 
 function renderRows() {
+
+    var displayPast = $("<div class='past'>");
+    var displayPresent = $("<div class='present'>");
+    var displayFuture = $("<div class='future'>");
+    var colLarge = $("<div class='col-md-8'>");
+
+    colLarge.append(displayPast, displayPresent, displayFuture);
+
+    $(".container").append(colLarge);
+
+    var past = localStorage.getItem("past");
+    var present = localStorage.getItem("present");
+    var future = localStorage.getItem("future");
+
     localStorage.setItem("present", present);
     localStorage.setItem("past", past);
     localStorage.setItem("future", future); 
@@ -61,16 +72,13 @@ function renderRows() {
     var hour = document.querySelector(".hour").value;
 
     if (hour > past) {
-    displayColor();
+    displayPast();
     } else if (hour == present) {
-    displayColor();
+    displayPresent();
     } else if (hour < future) {
-    displayColor();
+    displayFuture();
 };
 }
-
-
-
 
     // if (!savedTasks) do one thing, otherwise, loop over and render them
 // on save
